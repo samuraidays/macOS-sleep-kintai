@@ -1,6 +1,7 @@
 #!/bin/bash
 # スリープログ(pmset -g log)のうち、ディスプレイのON/OFFを勤怠に使う
-# その日の最初のON→勤務開始、その日の最後のOFF→勤務終了とする
+# その日の最初の"Display is turned on"→勤務開始
+# その日の最後の"Display is turned off"→勤務終了
 
 # 設定
 ## ファイルの最大行数
