@@ -6,12 +6,12 @@
 IFS=$'\n'
 # 設定
 ## ファイルの最大行数
-max_row=10
+max_row=200
 ## ログファイル
 logfile="/tmp/monthly-kintai.log"
 dlog="/tmp/daily-kintai.log"
 
-# 昨日のディスプレイのON/OFFログを取得する
+# ディスプレイのON/OFFログを取得して重複排除
 #logs=`pmset -g log | grep "Display is turned" | grep $yesterday | cut -d ' ' -f -15`
 dates=`pmset -g log | grep "Display is turned" | cut -d ' ' -f -1 | uniq`
 
