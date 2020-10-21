@@ -19,6 +19,7 @@ today=`date +'%Y-%m-%d'`
 
 for date in ${dates[@]};
 do
+    # 本日分は除外し、昨日までのデータを処理
     if [ $date != $today ]; then
         echo $date
         logs=`pmset -g log | grep "Display is turned" | grep ${date} | cut -d ' ' -f -15`
@@ -26,11 +27,13 @@ do
         start=`echo "$logs" | grep "Display is turned on" | head -n 1 | cut -d ' ' -f -2`
         end=`echo "$logs" | grep "Display is turned off" | tail -n 1 | cut -d ' ' -f -2`
 
+        # 開始時間
         cat $logfile | grep $start > /dev/null 2>&1
         if [ $? -ne 0 ]; then
             echo $start start >> $logfile
         fi
 
+        # 終了時間
         cat $logfile | grep $end > /dev/null 2>&1
         if [ $? -ne 0 ]; then
             echo $end end >> $logfile
