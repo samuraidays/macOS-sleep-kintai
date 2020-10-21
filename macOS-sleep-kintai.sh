@@ -13,24 +13,30 @@ dlog="/tmp/daily-kintai.log"
 
 # ディスプレイのON/OFFログを取得して重複排除
 #logs=`pmset -g log | grep "Display is turned" | grep $yesterday | cut -d ' ' -f -15`
-dates=`pmset -g log | grep "Display is turned" | cut -d ' ' -f -1 | uniq`
+dates=(`pmset -g log | grep "Display is turned" | cut -d ' ' -f -1 | uniq`)
 
 sort $logfile > $logfile
+today=`date +'%Y-%m-%d'`
+#dates=(${dates[@]/${today}/})
 
-for date in $dates;
+for date in ${dates[@]};
 do
-    logs=`pmset -g log | grep "Display is turned" | grep $date | cut -d ' ' -f -15`
-    start=`echo "$logs" | grep "Display is turned on" | head -n 1 | cut -d ' ' -f -2`
-    end=`echo "$logs" | grep "Display is turned off" | tail -n 1 | cut -d ' ' -f -2`
+    if [ $date != $today ]; then
+        echo $date
+        logs=`pmset -g log | grep "Display is turned" | grep ${date} | cut -d ' ' -f -15`
 
-    cat $logfile | grep $start > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo $start start >> $logfile
-    fi
+        start=`echo "$logs" | grep "Display is turned on" | head -n 1 | cut -d ' ' -f -2`
+        end=`echo "$logs" | grep "Display is turned off" | tail -n 1 | cut -d ' ' -f -2`
 
-    cat $logfile | grep $end > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo $end end >> $logfile
+        cat $logfile | grep $start > /dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            echo $start start >> $logfile
+        fi
+
+        cat $logfile | grep $end > /dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            echo $end end >> $logfile
+        fi
     fi
 done
 
