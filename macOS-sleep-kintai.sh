@@ -12,12 +12,10 @@ logfile="/tmp/monthly-kintai.log"
 dlog="/tmp/daily-kintai.log"
 
 # ディスプレイのON/OFFログを取得して重複排除
-#logs=`pmset -g log | grep "Display is turned" | grep $yesterday | cut -d ' ' -f -15`
 dates=(`pmset -g log | grep "Display is turned" | cut -d ' ' -f -1 | uniq`)
 
 sort $logfile > $logfile
 today=`date +'%Y-%m-%d'`
-#dates=(${dates[@]/${today}/})
 
 for date in ${dates[@]};
 do
