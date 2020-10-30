@@ -8,8 +8,8 @@ IFS=$'\n'
 ## ファイルの最大行数
 max_row=200
 ## ログファイル
-logfile="/tmp/monthly-kintai.log"
-dlog="/tmp/daily-kintai.log"
+logfile="/Library/Logs/monthly-kintai.log"
+##dlog="/tmp/daily-kintai.log"
 
 # ディスプレイのON/OFFログを取得して重複排除
 dates=(`pmset -g log | grep "Display is turned" | cut -d ' ' -f -1 | uniq`)
