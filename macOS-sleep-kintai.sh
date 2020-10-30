@@ -45,14 +45,11 @@ do
     fi
 done
 
-# ファイルの行数を取得
-#file_row=`cat $logfile | wc -l | /usr/bin/awk '{print $1}'`
-#if [ $file_row -ge $max_row ]; then
-#    row=`expr $file_row - $max_row`
-#    echo $row
-#    str=1,$row
-#    str2=d
-#    str=$str$str2
-#    sed -i -e $str $logfile
-#fi
+# ファイルの最大行数をコントロール
+file_row=`cat $logfile | wc -l | /usr/bin/awk '{print $1}'`
+if [ $file_row -ge $max_row ]; then
+    row=`expr $file_row - $max_row`
+    str="1,${row}d"
+    sed -i -e $str $logfile
+fi
 
