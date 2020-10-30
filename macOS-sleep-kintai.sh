@@ -11,6 +11,10 @@ max_row=200
 logfile="/Library/Logs/monthly-kintai.log"
 ##dlog="/tmp/daily-kintai.log"
 
+if [ ! -e $logfile ]; then
+    touch $logfile
+fi
+
 # ディスプレイのON/OFFログを取得して重複排除
 dates=(`pmset -g log | grep "Display is turned" | cut -d ' ' -f -1 | uniq`)
 
